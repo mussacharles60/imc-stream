@@ -13,7 +13,23 @@ const port = process.env.PORT || 3000; // default port to listen
 const httpServer = (0, http_1.createServer)(app);
 const io = new socket_io_1.Server(httpServer, {});
 io.on("connection", (socket) => {
-    // ...
+    // tslint:disable-next-line:no-console
+    console.log("a user connected");
+    socket.on("join", (room) => {
+        // tslint:disable-next-line:no-console
+        console.log("join room", room);
+        socket.join(room.id);
+    });
+    socket.on("leave", (room) => {
+        // tslint:disable-next-line:no-console
+        console.log("leave room", room);
+        socket.leave(room.id);
+    });
+    socket.on("message", (message) => {
+        // tslint:disable-next-line:no-console
+        console.log("message", message);
+        io.to(message.room_id).emit("message", message);
+    });
 });
 // Configure Express to use EJS
 app.set("views", path_1.default.join(__dirname, "views"));

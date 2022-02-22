@@ -14,8 +14,40 @@ const io = new Server(httpServer, {
 
 });
 
+type Room = {
+  id: string;
+  name: string;
+  description: string;
+}
+
+type Message = {
+  id: string;
+  room_id: string;
+}
+
 io.on("connection", (socket) => {
-  // ...
+
+  // tslint:disable-next-line:no-console
+  console.log("a user connected");
+
+  socket.on("join", (room: Room) => {
+    // tslint:disable-next-line:no-console
+    console.log("join room", room);
+    socket.join(room.id);
+  });
+
+  socket.on("leave", (room: Room) => {
+    // tslint:disable-next-line:no-console
+    console.log("leave room", room);
+    socket.leave(room.id);
+  });
+
+  socket.on("message", (message: Message) => {
+    // tslint:disable-next-line:no-console
+    console.log("message", message);
+    io.to(message.room_id).emit("message", message);
+  });
+
 });
 
 
