@@ -24,7 +24,7 @@
     "license": "ISC",
     "repository": {
         "type": "git",
-        "url": "git:https://github.com/mussacharles60/imc-stream.git"
+        "url": "git@https://github.com/mussacharles60/imc-stream.git"
     },
     "dependencies": {
         "body-parser": "^1.19.2",
