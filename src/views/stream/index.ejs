@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>IMC Stream</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+    <style type="text/css">
+        body {
+            background-color: #fafafa;
+        }
+        
+        .container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+        
+        .header-text {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #2196f3;
+            margin: 8px;
+        }
+        
+        .main-content {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            padding: 10px;
+        }
+        
+        .main-content video {
+            width: calc(100% - 16px);
+            height: auto;
+            min-width: 100px;
+            max-height: 600px;
+            text-align: center;
+            padding: 10px;
+            /* background: rgb(22, 135, 63); */
+            border: 1px solid rgb(18, 109, 51);
+            border-radius: 2px;
+            margin: 8px;
+        }
+        
+        .buttons-container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            padding: 10px;
+        }
+        
+        .btn {
+            width: 75px;
+            height: auto;
+            text-align: center;
+            padding: 10px;
+            background: rgb(22, 135, 63);
+            border: 1px solid rgb(18, 109, 51);
+            border-radius: 5px;
+            margin: 8px;
+            text-decoration: none;
+            color: white;
+        }
+        
+        .btn:hover {
+            background: rgb(18, 109, 51);
+            border: 1px solid rgb(18, 109, 51);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header-text">Stream</div>
+        <div class="main-content">
+            <video class="local-video" id="local-video" playsinline autoplay muted></video>
+
+            <div class="buttons-container">
+                <div class="start-btn btn" id="start-btn">start</div>
+                <!-- <div class="call-btn btn" disabled id="call-btn">call</div> -->
+                <!-- <div class="stop-btn btn" disabled id="stop-btn">stop</div> -->
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="/index.js"></script>
+</body>
+
+</html>

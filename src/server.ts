@@ -50,15 +50,20 @@ io.on("connection", (socket) => {
 
 });
 
-
 // Configure Express to use EJS
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
-// define a route handler for the default home page
-app.get("/", (req, res) => {
-  // render the index template
-  res.render("index");
+app.get("/", (_req, res) => {
+  res.render("home/index");
+});
+
+app.get("/stream", (_req, res) => {
+  res.render("stream/index");
+});
+
+app.get("/watch", (_req, res) => {
+  res.render("watch/index");
 });
 
 app.listen(port, () => {
