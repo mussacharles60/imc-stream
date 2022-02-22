@@ -2,12 +2,19 @@
 // reference: https://developer.okta.com/blog/2018/11/15/node-express-typescript
 
 import express from 'express';
+import cookieParser from 'cookie-parser';
 import { createServer } from 'http';
 import { Server } from 'socket.io';
 import path from "path";
 
 const app = express();
 const port: any = process.env.PORT || 3000; // default port to listen
+
+app.use(cookieParser());
+app.use(express.json());
+// app.use(bodyParser.urlencoded({ extended: true }));+
+// app.use(bodyParser.json());
+app.use(express.static(path.join(__dirname, 'public')));
 
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
@@ -51,19 +58,19 @@ io.on("connection", (socket) => {
 });
 
 // Configure Express to use EJS
-app.set("views", path.join(__dirname, "views"));
-app.set("view engine", "ejs");
+// app.set("views", path.join(__dirname, "views"));
+// app.set("view engine", "ejs");
 
 app.get("/", (_req, res) => {
-  res.render("home/index");
+  res.sendFile(__dirname + "/views/index.html");
 });
 
 app.get("/stream", (_req, res) => {
-  res.render("stream/index");
+  res.sendFile(__dirname + "/views/stream.html");
 });
 
 app.get("/watch", (_req, res) => {
-  res.render("watch/index");
+  res.sendFile(__dirname + "/views/watch.html");
 });
 
 app.listen(port, () => {
