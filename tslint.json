@@ -1,11 +1,21 @@
 {
     "defaultSeverity": "error",
     "extends": [
-        "tslint:recommended"
+        "tslint:latest"
     ],
     "jsRules": {},
     "rules": {
         "trailing-comma": [false]
     },
-    "rulesDirectory": []
+    "rulesDirectory": [
+        "src/server.ts"
+    ],
+    "linterOptions": {
+        "exclude": [
+            "src/public/*.ts",
+            "src/public/*.tsx",
+            "src/public/*.js",
+            "src/public/*.jsx"
+        ]
+    }
 }

@@ -73,7 +73,7 @@ app.get("/watch", (_req, res) => {
   res.sendFile(__dirname + "/views/watch.html");
 });
 
-app.listen(port, () => {
+httpServer.listen(port, () => {
   // tslint:disable-next-line:no-console
   console.log(`Server running on port ${port}.`);
 });

@@ -1,20 +1,22 @@
 {
   "compilerOptions": {
       "module": "commonjs",
-      "esModuleInterop": true,
-      "target": "es6",
-      "noImplicitAny": true,
-      "moduleResolution": "node",
-      "sourceMap": true,
-      "outDir": "dist",
-      "baseUrl": ".",
-      "paths": {
+      "esModuleInterop": true, // 允许使用ES6模块化语法
+      "target": "es6", // or es2015
+      "noImplicitAny": true, // 关闭implicitAny
+      "moduleResolution": "node", // "node" | "classic"
+      "sourceMap": true, // true
+      "allowJs": true, // Allow .js files to be compiled
+      "checkJs": false, // Check .js files for errors
+      "outDir": "dist", // Compile to this directory
+      "baseUrl": ".", // Compile from this directory
+      "paths": { // Add these paths to the resolve
           "*": [
               "node_modules/*"
           ]
       }
   },
-  "include": [
+  "include": [ // Include these files
       "src/**/*"
   ]
 }

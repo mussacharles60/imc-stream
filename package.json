@@ -10,7 +10,7 @@
         "tsc": "tsc",
         "build": "npm-run-all clean lint tsc copy-assets",
         "dev:start": "npm-run-all build start",
-        "dev": "nodemon --watch src -e ts,html,css --exec npm run dev:start",
+        "dev": "nodemon --watch src -e js,ts,html,css --exec npm run dev:start",
         "_dev": "nodemon --watch src -e ts,ejs --exec npm run dev:start",
         "start": "node ."
     },
