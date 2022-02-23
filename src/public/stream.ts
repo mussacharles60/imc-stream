@@ -33,78 +33,36 @@ window.onload = async () => {
     const voice_btn = document.getElementById('voice-btn');
     const video_btn = document.getElementById('video-btn');
 
-    const btn_observer = new MutationObserver((mutations) => {
-        mutations.forEach((mutation: MutationRecord) => {
-            console.log('mutation:', mutation);
-            if (mutation.type === 'attributes') {
-                // if (mutation.target.classList.contains('disabled')) {
-                //     console.log('disabled');
-                // } else {
-                //     console.log('enabled');
-                // }
-                if (mutation.attributeName === 'disabled') {
-                    console.log('disabled');
-                    // change display style on associated element
-                    const element_id: string = (mutation.target as any).attributes.id.nodeValue;
-                    console.log('element_id:', element_id);
-                    const element = document.getElementById(element_id);
-                    // wait for 100ms element to be available
-                    setTimeout(() => {
-                        if (element) {
-                            console.log('element:', element);
-                            element.style.display = 'none';
-                        }
-                    }, 500);
-                } else {
-                    console.log('enabled');
-                    // change display style on associated element
-                    const element_id: string = (mutation.target as any).attributes.id.nodeValue;
-                    console.log('element_id:', element_id);
-                    const element = document.getElementById(element_id);
-                    setTimeout(() => {
-                        if (element) {
-                            console.log('element:', element);
-                            element.style.display = 'block';
-                        }
-                    }, 500);
-                }
-            }
-        });
-    });
+    // const btn_observer = new MutationObserver((mutations) => {
+    //     mutations.forEach((mutation: MutationRecord) => {
+    //         console.log('mutation:', mutation);
+    //         if (mutation.type === 'attributes') {
+    //             const element_id: string = (mutation.target as any).attributes.id.nodeValue;
+    //             console.log('element_id:', element_id);
+    //             const element = document.getElementById(element_id);
+    //             if (!element) return;
+    //             console.log('element:before', element);
+    //             if (mutation.attributeName === 'disabled') {
+    //                 element.style.display = (element as any).disabled ? 'none' : 'block';
+    //             }
+    //             console.log('element:after', element);
+    //         }
+    //     });
+    // });
 
-    if (start_btn) {
-        start_btn.style.display = 'none';
-        btn_observer.observe(start_btn, { attributes: true, });
-    }
-    if (voice_btn) {
-        voice_btn.style.display = 'none';
-        btn_observer.observe(voice_btn, { attributes: true, });
-    }
-    if (video_btn) {
-        video_btn.style.display = 'none';
-        btn_observer.observe(video_btn, { attributes: true, });
-    }
-    if (stop_btn) {
-        stop_btn.style.display = 'none';
-        btn_observer.observe(stop_btn, { attributes: true, });
-    }
+    const enableBtn = (btn: HTMLElement | undefined, enable: boolean) => {
+        if (!btn) return;
+        (btn as any).disabled = !enable;
+        btn.style.display = enable ? 'block' : 'none';
+    };
+
+    enableBtn(start_btn, false);
+    enableBtn(voice_btn, false);
+    enableBtn(video_btn, false);
+    enableBtn(stop_btn, false);
 
     if (local_video) {
         local_video.style.display = 'none';
-    }
-
-    if (start_btn) {
-        // alternate enabling and disabling the start button with time interval for 1 second with set attribute
-        setInterval(() => {
-            if (start_btn) {
-                if (start_btn.getAttribute('disabled')) {
-                    start_btn.removeAttribute('disabled');
-                } else {
-                    start_btn.setAttribute('disabled', 'true');
-                }
-            }
-        }, 2000);
-
     }
 
     if (start_btn) {
@@ -173,31 +131,42 @@ window.onload = async () => {
 
 
             } else {
+                console.log('loadVideoDevices-result', devices);
                 // // iterate on all devices and if is a video device, get the deviceId
                 // const video_device_id = devices.find((device: MediaDeviceInfo) => device.kind === 'videoinput').deviceId;
                 // iterate on all devices and log the deviceId
                 devices.forEach((device: MediaDeviceInfo) => {
                     // check if device is a video device
                     if (device.kind === 'videoinput') {
-                        console.log(device.deviceId);
+                        console.log('video-input', device.deviceId);
                     }
                 });
             }
 
+        } catch (err) {
+            console.log('loadVideoDevices-error:', err);
+        }
+    }
+
+    async function loadMediaScreen() {
+        try {
+            if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+                // alert('Your browser does not support media devices.');
+                return;
+            }
             // get display media | desktop sharing
             const stream = await navigator.mediaDevices.getDisplayMedia({
                 video: true,
                 audio: true,
-            }).catch((err) => {
-                console.log('media-display-error:', err);
             });
             if (!stream) return;
-
-            console.log('media-display:', stream);
+            console.log('loadMediaScreen-result:', stream);
         } catch (err) {
-            console.log('get-media-error:', err);
+            console.log('loadMediaScreen-error:', err);
         }
     }
+
+
 
 
 
