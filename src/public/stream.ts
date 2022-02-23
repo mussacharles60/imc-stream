@@ -41,12 +41,16 @@ window.onload = async () => {
                     alert('Your browser does not support media devices.');
                     return;
                 }
-                // get video or audio devices
+                // get video or audio devices | camera hardware
                 navigator.mediaDevices.enumerateDevices().then((devices) => {
-                    // iterate each device and display info for user to choose
-                    devices.forEach((device) => {
-                        console.log('media-device:', device);
-                    });
+                    console.log('media-devices:', devices);
+                    // // iterate each device and display info for user to choose
+                    // devices.forEach((device) => {
+                    //     console.log('media-device:', device);
+                    // });
+                })
+                .catch((err) => {
+                    console.log('media-device-error:', err);
                 });
                 // get display media | desktop sharing
                 const stream = await navigator.mediaDevices.getDisplayMedia({
