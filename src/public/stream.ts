@@ -63,8 +63,8 @@ window.onload = async () => {
             if (!media_top_lay || !filter_container) return;
              // alternate media_top_lay display_style
             if (media_top_lay.style.display === 'none') {
-                media_top_lay.style.display = 'block';
-                filter_container.style.display = 'block';
+                media_top_lay.style.display = 'flex';
+                filter_container.style.display = 'flex';
                 open_setting_btn.innerText = 'Close Setting';
             } else {
                 media_top_lay.style.display = 'none';
@@ -80,6 +80,7 @@ window.onload = async () => {
         btn.style.display = enable ? 'block' : 'none';
     };
 
+    enableBtn(open_setting_btn, true);
     enableBtn(start_btn, false);
     enableBtn(voice_btn, false);
     enableBtn(video_btn, false);
