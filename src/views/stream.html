@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>IMC Stream</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"> -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="/css/stream.css" type="text/css" />
 </head>
@@ -22,11 +22,13 @@
                     <div class="media-left-lay media-lay">
                         <div class="media-list-title" id="select-camera-btn">Available Video & Audio Devices</div>
                         <div class="media-left-list-lay media-list-lay" id="media-left-list-lay">
+                            <span class="media-list-error-text" id="media-left-error-text"></span>
                         </div>
                     </div>
                     <div class="media-right-lay media-lay">
                         <div class="media-list-title" id="select-screen-btn">Select Desktop Or Screen(s)</div>
                         <div class="media-right-list media-list-lay" id="media-right-list-lay">
+                            <span class="media-list-error-text" id="media-right-error-text"></span>
                         </div>
                     </div>
                 </div>

@@ -34,7 +34,7 @@ window.onload = async () => {
     const video_btn = document.getElementById('video-btn');
 
     const btn_observer = new MutationObserver((mutations) => {
-        mutations.forEach((mutation) => {
+        mutations.forEach((mutation: MutationRecord) => {
             console.log('mutation:', mutation);
             if (mutation.type === 'attributes') {
                 // if (mutation.target.classList.contains('disabled')) {
@@ -44,17 +44,50 @@ window.onload = async () => {
                 // }
                 if (mutation.attributeName === 'disabled') {
                     console.log('disabled');
+                    // change display style on associated element
+                    const element_id: string = (mutation.target as any).attributes.id.nodeValue;
+                    console.log('element_id:', element_id);
+                    const element = document.getElementById(element_id);
+                    // wait for 100ms element to be available
+                    setTimeout(() => {
+                        if (element) {
+                            console.log('element:', element);
+                            element.style.display = 'none';
+                        }
+                    }, 500);
                 } else {
                     console.log('enabled');
+                    // change display style on associated element
+                    const element_id: string = (mutation.target as any).attributes.id.nodeValue;
+                    console.log('element_id:', element_id);
+                    const element = document.getElementById(element_id);
+                    setTimeout(() => {
+                        if (element) {
+                            console.log('element:', element);
+                            element.style.display = 'block';
+                        }
+                    }, 500);
                 }
             }
         });
     });
 
-    if (start_btn) btn_observer.observe(start_btn, { attributes: true, });
-    if (voice_btn) btn_observer.observe(voice_btn, { attributes: true, });
-    if (video_btn) btn_observer.observe(video_btn, { attributes: true, });
-    if (stop_btn) btn_observer.observe(stop_btn, { attributes: true, });
+    if (start_btn) {
+        start_btn.style.display = 'none';
+        btn_observer.observe(start_btn, { attributes: true, });
+    }
+    if (voice_btn) {
+        voice_btn.style.display = 'none';
+        btn_observer.observe(voice_btn, { attributes: true, });
+    }
+    if (video_btn) {
+        video_btn.style.display = 'none';
+        btn_observer.observe(video_btn, { attributes: true, });
+    }
+    if (stop_btn) {
+        stop_btn.style.display = 'none';
+        btn_observer.observe(stop_btn, { attributes: true, });
+    }
 
     if (local_video) {
         local_video.style.display = 'none';
@@ -70,8 +103,8 @@ window.onload = async () => {
                     start_btn.setAttribute('disabled', 'true');
                 }
             }
-        }, 1000);
-        
+        }, 2000);
+
     }
 
     if (start_btn) {
@@ -166,8 +199,8 @@ window.onload = async () => {
         }
     }
 
-    
 
-    
+
+
 
 }
