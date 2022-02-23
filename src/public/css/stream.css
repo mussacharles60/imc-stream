@@ -17,6 +17,7 @@ body {
 }
 
 .header-text {
+    width: 100%;
     height: 50px;
     font-size: 24px;
     font-weight: bold;
@@ -25,6 +26,10 @@ body {
     padding: 0;
     text-align: center;
     position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .main-content {
@@ -35,12 +40,12 @@ body {
     justify-content: center;
     align-items: center;
     position: relative;
-    padding: 4px;
+    padding: 0 8px 0 8px;
 }
 
 .main-content video {
     width: calc(100% - 16px);
-    height: calc(100% - 150px);
+    height: calc(100% - 100px);
     text-align: center;
     padding: 0;
     /* background: rgb(22, 135, 63); */
@@ -59,7 +64,7 @@ media top
 
 .main-content .media-top-lay {
     width: calc(100% - 16px);
-    height: calc(100% - 150px);
+    height: calc(100% - 100px);
     text-align: center;
     padding: 8px;
     /* background: rgb(22, 135, 63); */
