@@ -5,11 +5,16 @@ import express from 'express';
 import cookieParser from 'cookie-parser';
 import { createServer } from 'http';
 import { Server } from 'socket.io';
+import cors from 'cors';
 import path from "path";
 
 const app = express();
 const port: any = process.env.PORT || 3000; // default port to listen
 
+app.use(cors({
+    origin: '*',
+    // credentials: true,
+}));
 app.use(cookieParser());
 app.use(express.json());
 // app.use(bodyParser.urlencoded({ extended: true }));+
@@ -18,7 +23,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
-
+  cors: {
+    origin: '*',
+  }
 });
 
 type Room = {

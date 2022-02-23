@@ -6,99 +6,45 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>IMC Stream</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"> -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-
-    <style type="text/css">
-        body {
-            background-color: #fafafa;
-        }
-        
-        .container {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-        }
-        
-        .header-text {
-            font-size: 2rem;
-            font-weight: bold;
-            color: #2196f3;
-            margin: 8px;
-        }
-        
-        .main-content {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            flex-direction: row;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-            padding: 10px;
-        }
-        
-        .main-content video {
-            width: calc(100% - 16px);
-            height: auto;
-            min-width: 100px;
-            max-height: 600px;
-            text-align: center;
-            padding: 10px;
-            background: rgb(22, 135, 63);
-            border: 1px solid rgb(18, 109, 51);
-            border-radius: 2px;
-            margin: 8px;
-        }
-        
-        .buttons-container {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            flex-direction: row;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-            padding: 10px;
-        }
-        
-        .btn {
-            width: 75px;
-            height: auto;
-            text-align: center;
-            padding: 10px;
-            background: rgb(22, 135, 63);
-            border: 1px solid rgb(18, 109, 51);
-            border-radius: 5px;
-            margin: 8px;
-            text-decoration: none;
-            color: white;
-        }
-        
-        .btn:hover {
-            background: rgb(18, 109, 51);
-            border: 1px solid rgb(18, 109, 51);
-        }
-    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/watch.css" type="text/css" />
 </head>
 
 <body>
     <div class="container">
-        <div class="header-text">Stream</div>
+        <div class="header-text">Watch</div>
         <div class="main-content">
             <video class="local-video" id="local-video" playsinline autoplay muted></video>
+            <div id="filter-container"></div>
+            <div class="media-top-lay" id="media-top-lay">
 
+                <div class="media-select-title">Select Input</div>
+                <div class="media-list-container">
+                    <div class="media-left-lay media-lay">
+                        <div class="media-list-btn" id="select-camera-btn">Available Video & Audio Devices</div>
+                        <div class="media-left-list-lay media-list-lay" id="media-left-list-lay">
+                            <span class="media-list-error-text" id="media-left-error-text"></span>
+                        </div>
+                    </div>
+                    <div class="media-right-lay media-lay">
+                        <div class="media-list-btn" id="select-screen-btn">Select Desktop Or Media Screen(s)</div>
+                        <div class="media-right-list media-list-lay" id="media-right-list-lay">
+                            <span class="media-list-error-text" id="media-right-error-text"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="buttons-container">
-                <div class="start-btn btn" id="start-btn">start</div>
-                <!-- <div class="call-btn btn" disabled id="call-btn">call</div> -->
-                <!-- <div class="stop-btn btn" disabled id="stop-btn">stop</div> -->
+                <div class="start-btn btn" id="start-btn">Go Live</div>
+                <div class="voice-btn btn" disabled id="voice-btn">Turn Off Voice</div>
+                <div class="video-btn btn" disabled id="video-btn">Turn Off Video</div>
+                <div class="stop-btn btn" disabled id="stop-btn">Stop Stream</div>
             </div>
         </div>
     </div>
+    <script src="/socket.io.js"></script>
     <script type="text/javascript" src="/watch.js"></script>
 </body>
 

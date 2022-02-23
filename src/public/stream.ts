@@ -4,7 +4,7 @@ declare var io: any;
 
 window.onload = async () => {
 
-    const server_url = 'http://localhost:3000';
+    const server_url = 'http://192.168.100.5:3000';
 
     // declare io as a global variable without requiring it
     // https://stackoverflow.com/questions/56907841/how-to-use-socket-io-client-in-typescript
@@ -36,6 +36,7 @@ window.onload = async () => {
     const video_btn = document.getElementById('video-btn');
     const select_camera_btn = document.getElementById('select-camera-btn');
     const select_screen_btn = document.getElementById('select-screen-btn');
+    const open_setting_btn = document.getElementById('open-setting-btn');
 
     // const btn_observer = new MutationObserver((mutations) => {
     //     mutations.forEach((mutation: MutationRecord) => {
@@ -53,6 +54,25 @@ window.onload = async () => {
     //         }
     //     });
     // });
+
+    if (open_setting_btn) {
+        open_setting_btn.addEventListener('click', () => {
+            console.log('open_setting_btn:click');
+            const media_top_lay = document.getElementById('media-top-lay');
+            const filter_container = document.getElementById('filter-container');
+            if (!media_top_lay || !filter_container) return;
+             // alternate media_top_lay display_style
+            if (media_top_lay.style.display === 'none') {
+                media_top_lay.style.display = 'block';
+                filter_container.style.display = 'block';
+                open_setting_btn.innerText = 'Close Setting';
+            } else {
+                media_top_lay.style.display = 'none';
+                filter_container.style.display = 'none';
+                open_setting_btn.innerText = 'Open Setting';
+            }
+        });
+    }
 
     const enableBtn = (btn: HTMLElement | undefined, enable: boolean) => {
         if (!btn) return;
