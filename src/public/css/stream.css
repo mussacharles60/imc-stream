@@ -144,6 +144,7 @@ media top
     position: relative;
     margin: 0 4px 0 4px;
     padding: 0;
+    overflow: hidden;
 }
 
 .main-content .media-top-lay .media-left-lay {
@@ -163,7 +164,7 @@ media top
     height: 48px;
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: center;
     position: relative;
     margin: 8px;
@@ -206,8 +207,8 @@ media top
     justify-content: flex-start;
     align-items: center;
     position: relative;
-    margin: 0;
-    padding: 8px;
+    margin: 0 0 4px 0;
+    padding: 0;
     border: 1px solid #349cf2;
     border-radius: 8px;
     background-color: #ffffff;
@@ -222,11 +223,10 @@ media top
 .media-list-lay .media-list-item .media-list-item-icon {
     width: 30px;
     height: 30px;
-    margin: 0 8px 0 0;
+    margin: 0 8px 0 8px;
     padding: 0;
     border: 1px solid #349cf2;
     border-radius: 8px;
-    background-color: #ffffff;
     color: #000000;
     font-size: 26px;
     font-weight: bold;
@@ -238,9 +238,6 @@ media top
     height: 48px;
     margin: 0;
     padding: 0;
-    border: 1px solid #349cf2;
-    border-radius: 8px;
-    background-color: #ffffff;
     color: #000000;
     font-size: 14px;
     font-weight: bold;
@@ -248,7 +245,7 @@ media top
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
 }
 
 

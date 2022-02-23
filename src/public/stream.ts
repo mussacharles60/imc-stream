@@ -133,6 +133,8 @@ window.onload = async () => {
     function loadVideoDevicesToListContainer(devices: MediaDeviceInfo[]) {
         const left_list_lay: HTMLElement | undefined = document.getElementById('media-left-list-lay');
         if (!left_list_lay) return;
+        // remove all elements which its class name contains 'media-list-item'
+        
         left_list_lay.innerHTML = '';
         devices.forEach((device: MediaDeviceInfo) => {
             const list_item = document.createElement('div');
