@@ -1,46 +1,53 @@
 body {
     background-color: #fafafa;
+    font-family: 'Open Sans', sans-serif;
+    overflow: hidden;
+    box-sizing: border-box;
 }
 
 .container {
     width: 100%;
-    height: 100%;
+    height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     position: relative;
+    overflow: hidden;
 }
 
 .header-text {
-    font-size: 2rem;
+    height: 50px;
+    font-size: 24px;
     font-weight: bold;
     color: #2196f3;
-    margin: 8px;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    position: relative;
 }
 
 .main-content {
     width: 100%;
-    height: 100%;
+    height: calc(100vh - 50px);
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     position: relative;
-    padding: 10px;
+    padding: 4px;
 }
 
 .main-content video {
     width: calc(100% - 16px);
-    height: auto;
-    min-width: 100px;
-    max-height: 800px;
+    height: calc(100% - 150px);
     text-align: center;
-    padding: 10px;
+    padding: 0;
     /* background: rgb(22, 135, 63); */
     border: 1px solid rgb(18, 109, 51);
-    border-radius: 2px;
-    margin: 8px;
+    border-radius: 8px;
+    margin: 0;
+    /* display: none; */
 }
 
 
@@ -52,15 +59,13 @@ media top
 
 .main-content .media-top-lay {
     width: calc(100% - 16px);
-    height: auto;
-    min-width: 100px;
-    max-height: 800px;
+    height: calc(100% - 150px);
     text-align: center;
-    padding: 10px;
+    padding: 8px;
     /* background: rgb(22, 135, 63); */
     border: 1px solid rgb(18, 109, 51);
-    border-radius: 2px;
-    margin: 8px;
+    border-radius: 8px;
+    margin: 0;
 }
 
 
@@ -72,25 +77,25 @@ bottom
 
 .buttons-container {
     width: 100%;
-    height: 100%;
+    height: 100px;
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
     position: relative;
-    padding: 10px;
+    padding: 4px;
 }
 
 .btn {
     width: auto;
     height: auto;
-    max-width: 150px;
+    max-height: 60px;
     text-align: center;
     padding: 4px 8px;
     background: rgb(22, 135, 63);
     border: 1px solid rgb(18, 109, 51);
     border-radius: 8px;
-    margin: 8px;
+    margin: 0 8px 0 8px;
     text-decoration: none;
     color: white;
     font-size: 1rem;

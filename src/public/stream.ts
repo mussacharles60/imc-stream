@@ -27,8 +27,12 @@ window.onload = async () => {
     const localStream: any = null;
     const remoteStream: any = null;
 
-    const localVideo = document.getElementById('local-video');
+    const local_video = document.getElementById('local-video');
     const start_btn = document.getElementById('start-btn');
+
+    if (local_video) {
+        local_video.style.display = 'none';
+    }
 
     if (start_btn) {
         start_btn.onclick = async () => {
