@@ -220,13 +220,15 @@ media top
     background-color: #016ec7;
 }
 
+.media-list-lay .media-list-item:hover * {
+    color: #ffffff;
+}
+
 .media-list-lay .media-list-item .media-list-item-icon {
     width: 30px;
     height: 30px;
     margin: 0 8px 0 8px;
     padding: 0;
-    border: 1px solid #349cf2;
-    border-radius: 8px;
     color: #000000;
     font-size: 26px;
     font-weight: bold;
@@ -246,6 +248,17 @@ media top
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
+}
+
+.media-list-lay .media-list-item .media-list-item-text-title {
+    font-size: 14px;
+    font-weight: bold;
+    margin: 0 0 4px 0;
+}
+
+.media-list-lay .media-list-item .media-list-item-text-subtitle {
+    font-size: 12px;
+    font-weight: 100;
 }
 
 

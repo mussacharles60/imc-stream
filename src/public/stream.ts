@@ -24,8 +24,10 @@ window.onload = async () => {
 
     // Global State
     const pc = new RTCPeerConnection(servers);
-    const localStream: any = null;
-    const remoteStream: any = null;
+    let localStream: MediaStream | null = null;
+    // let remoteStream: MediaStream | null = null;
+
+    var media_devices: MediaDeviceInfo[] = [];
 
     const local_video: HTMLElement | undefined = document.getElementById('local-video');
     const start_btn: HTMLElement | undefined = document.getElementById('start-btn');
@@ -70,7 +72,7 @@ window.onload = async () => {
     }
     if (select_screen_btn) {
         select_screen_btn.onclick = async () => {
-            loadMediaScreen();
+            loadScreenInputs();
         };
     }
 
@@ -90,28 +92,31 @@ window.onload = async () => {
 
             // check if there are any devices
             if (devices.length === 0) {
-
-
-            } else {
-                console.log('loadVideoDevices-result', devices);
-                // // iterate on all devices and if is a video device, get the deviceId
-                // const video_device_id = devices.find((device: MediaDeviceInfo) => device.kind === 'videoinput').deviceId;
-                // iterate on all devices and log the deviceId
-                devices.forEach((device: MediaDeviceInfo) => {
-                    // check if device is a video device
-                    if (device.kind === 'videoinput') {
-                        console.log('video-input', device.deviceId);
-                    }
-                });
-                loadVideoDevicesToListContainer(devices);
+                const left_list_lay: HTMLElement | undefined = document.getElementById('media-left-list-lay');
+                if (!left_list_lay) return;
+                // remove all elements which its class name contains 'media-list-item'
+                left_list_lay.innerHTML = '';
+                return;
             }
+            console.log('loadVideoDevices-result', devices);
+            // // iterate on all devices and if is a video device, get the deviceId
+            // const video_device_id = devices.find((device: MediaDeviceInfo) => device.kind === 'videoinput').deviceId;
+            // iterate on all devices and log the deviceId
+            // devices.forEach((device: MediaDeviceInfo) => {
+            //     // check if device is a video device
+            //     if (device.kind === 'videoinput') {
+            //         console.log('video-input', device.deviceId);
+            //     }
+            // });
+            media_devices = devices;
+            loadVideoDevicesToListContainer(devices);
 
         } catch (err) {
             console.log('loadVideoDevices-error:', err);
         }
     }
 
-    async function loadMediaScreen() {
+    async function loadScreenInputs() {
         try {
             if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
                 // alert('Your browser does not support media devices.');
@@ -122,40 +127,134 @@ window.onload = async () => {
                 video: true,
                 audio: true,
             });
-            if (!stream) return;
+            if (!stream) {
+                const right_list_lay: HTMLElement | undefined = document.getElementById('media-right-list-lay');
+                if (!right_list_lay) return;
+                // remove all elements which its class name contains 'media-list-item'
+                right_list_lay.innerHTML = '';
+                return;
+            }
             console.log('loadMediaScreen-result:', stream);
+            loadScreenInputsToListContainer(stream);
+
         } catch (err) {
             console.log('loadMediaScreen-error:', err);
         }
     }
 
-
-    function loadVideoDevicesToListContainer(devices: MediaDeviceInfo[]) {
+    async function loadVideoDevicesToListContainer(devices: MediaDeviceInfo[]) {
         const left_list_lay: HTMLElement | undefined = document.getElementById('media-left-list-lay');
         if (!left_list_lay) return;
         // remove all elements which its class name contains 'media-list-item'
-        
         left_list_lay.innerHTML = '';
         devices.forEach((device: MediaDeviceInfo) => {
+            // allow only video devices
+            if (device.kind != 'videoinput') return;
             const list_item = document.createElement('div');
             list_item.className = 'media-list-item';
             list_item.id = device.deviceId;
             list_item.innerHTML = `
                     <div class="media-list-item-icon">
-                        <i class="fas fa-video list-icon"></i>
+                        <i class="fa fa-video-camera list-icon"></i>
                     </div>
                     <div class="media-list-item-text">
                         <div class="media-list-item-text-title">${device.label}</div>
-                        <!-- <div class="media-list-item-text-subtitle">${device.deviceId}</div> -->
+                        <div class="media-list-item-text-subtitle">${device.kind === 'videoinput' ? 'Video Input' : device.kind === 'audioinput' ? 'Audio Input' : 'Media Input'}</div>
                         </div>
                     </div>
                 `;
+            list_item.onclick = async () => onMediaHardwareInputClick(device.deviceId);
             left_list_lay.appendChild(list_item);
         });
     }
 
+    async function onMediaHardwareInputClick(deviceId: string) {
+        // get the device from devices list
+        const device = media_devices.find((device: MediaDeviceInfo) => device.deviceId === deviceId);
+        if (!device) return;
+        if (device.kind != 'videoinput') return;
+        console.log('onMediaInputClick-device:', device);
+        // get the video element
+        if (!local_video) return;
+        // get the video stream
+        // load video stream from specific device id
+        // const stream = await navigator.mediaDevices.getUserMedia({
+        //     video: {
+        //         deviceId: { exact: deviceId },
+        //     },
+        //     audio: {
+        //         deviceId: { exact: deviceId },
+        //     },
+        // });
+        const stream = await navigator.mediaDevices.getUserMedia({
+            video: true,
+            audio: true,
+        });
+        if (!stream) return;
+        console.log('onMediaInputClick-stream:', stream);
 
+        localStream = stream;
+        // clear remote stream
+        // remoteStream = new MediaStream();
 
+        // Push tracks from local stream to peer connection
+        localStream.getTracks().forEach((track: MediaStreamTrack) => {
+            if (pc.getSenders().find((sender: RTCRtpSender) => sender.track === track)) return;
+            pc.addTrack(track, localStream);
+        });
 
+        (local_video as any).srcObject = stream;
+
+        // enable buttons
+        enableBtn(start_btn, true);
+        enableBtn(voice_btn, true);
+        enableBtn(video_btn, true);
+        enableBtn(stop_btn, true);
+
+    }
+
+    async function loadScreenInputsToListContainer(stream: MediaStream) {
+        const right_list_lay: HTMLElement | undefined = document.getElementById('media-right-list-lay');
+        if (!right_list_lay) return;
+        // remove all elements which its class name contains 'media-list-item'
+        right_list_lay.innerHTML = '';
+        const list_item = document.createElement('div');
+        list_item.className = 'media-list-item';
+        list_item.id = stream.id;
+        list_item.innerHTML = `
+                <div class="media-list-item-icon">
+                    <i class="fa fa-desktop list-icon"></i>
+                </div>
+                <div class="media-list-item-text">
+                    <div class="media-list-item-text-title">Screen 1</div>
+                    <div class="media-list-item-text-subtitle">Screen Input</div>
+                    </div>
+                </div>
+            `;
+        list_item.onclick = async () => onMediaSoftwareInputClick(stream);
+        right_list_lay.appendChild(list_item);
+    }
+
+    async function onMediaSoftwareInputClick(stream: MediaStream) {
+        console.log('onMediaSoftwareInputClick-stream:', stream);
+        localStream = stream;
+        // clear remote stream
+        // remoteStream = new MediaStream();
+
+        // Push tracks from local stream to peer connection
+        stream.getTracks().forEach((track: MediaStreamTrack) => {
+            // ceck if track is not already added
+            if (pc.getSenders().find((sender: RTCRtpSender) => sender.track === track)) return;
+            pc.addTrack(track, stream);
+        });
+
+        (local_video as any).srcObject = stream;
+
+        // enable buttons
+        enableBtn(start_btn, true);
+        enableBtn(voice_btn, true);
+        enableBtn(video_btn, true);
+        enableBtn(stop_btn, true);
+    }
 
 }
