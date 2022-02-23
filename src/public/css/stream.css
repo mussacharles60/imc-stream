@@ -1,5 +1,5 @@
 body {
-    background-color: #fafafa;
+    background-color: #ffffff;
     font-family: 'Open Sans', sans-serif;
     overflow: hidden;
     box-sizing: border-box;
@@ -51,14 +51,18 @@ body {
 }
 
 .main-content video {
-    width: calc(100% - 16px);
+    width: 100%;
     height: calc(100% - 100px);
     text-align: center;
+    margin: 0;
     padding: 0;
-    /* background: rgb(22, 135, 63); */
     border: 1px solid #349cf2;
     border-radius: 8px;
     margin: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
 }
 
 
@@ -69,7 +73,7 @@ media top
 */
 
 #filter-container {
-    width: calc(100% - 16px);
+    width: calc(100% - 4px);
     height: calc(100% - 100px);
     position: absolute;
     top: 0;
@@ -82,11 +86,11 @@ media top
 }
 
 .main-content .media-top-lay {
-    width: calc(100% - 16px);
+    width: calc(100% - 4px);
     height: calc(100% - 100px);
     text-align: center;
-    margin: 8px 0 8px 0;
-    padding: 8px;
+    margin: 0;
+    padding: 0;
     border: 1px solid #349cf2;
     border-radius: 8px;
     margin: 0;
@@ -100,10 +104,15 @@ media top
 }
 
 .main-content .media-top-lay .media-select-title {
+    width: 100%;
+    height: 40px;
     font-size: 16px;
     font-weight: bold;
-    color: #349cf2;
-    margin: 8px 0 0 0;
+    color: #fff;
+    background-color: #349cf2;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    margin: 0 0 8px 0;
     padding: 0;
     text-align: center;
     position: relative;
@@ -115,14 +124,14 @@ media top
 
 .main-content .media-top-lay .media-list-container {
     width: calc(100% - 16px);
-    height: 100%;
+    height: calc(100% - 16px);
     max-width: 600px;
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
     position: relative;
-    margin: 8px 0 0 0;
+    margin: 0 0 16px 0;
 }
 
 .main-content .media-top-lay .media-lay {
@@ -147,6 +156,99 @@ media top
     border: 1px solid #349cf2;
     border-top-right-radius: 8px;
     border-bottom-right-radius: 8px;
+}
+
+.main-content .media-top-lay .media-lay .media-list-btn {
+    width: 90%;
+    height: 48px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    position: relative;
+    margin: 8px;
+    padding: 2px;
+    border: 1px solid #349cf2;
+    border-radius: 8px;
+    background-color: #349cf2;
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 100;
+    cursor: pointer;
+    /* position: absolute;
+    top: 0;
+    z-index: 1; */
+}
+
+.main-content .media-top-lay .media-lay .media-list-btn:hover {
+    background-color: #016ec7;
+}
+
+.media-list-lay {
+    width: calc(100% - 4px);
+    height: calc(100% - 48px);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    position: relative;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.media-list-lay .media-list-item {
+    width: calc(100% - 4px);
+    height: 48px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    position: relative;
+    margin: 0;
+    padding: 8px;
+    border: 1px solid #349cf2;
+    border-radius: 8px;
+    background-color: #ffffff;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.media-list-lay .media-list-item:hover {
+    background-color: #016ec7;
+}
+
+.media-list-lay .media-list-item .media-list-item-icon {
+    width: 30px;
+    height: 30px;
+    margin: 0 8px 0 0;
+    padding: 0;
+    border: 1px solid #349cf2;
+    border-radius: 8px;
+    background-color: #ffffff;
+    color: #000000;
+    font-size: 26px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.media-list-lay .media-list-item .media-list-item-text {
+    width: calc(100% - 30px);
+    height: 48px;
+    margin: 0;
+    padding: 0;
+    border: 1px solid #349cf2;
+    border-radius: 8px;
+    background-color: #ffffff;
+    color: #000000;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 

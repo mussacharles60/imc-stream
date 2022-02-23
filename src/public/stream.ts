@@ -32,6 +32,8 @@ window.onload = async () => {
     const stop_btn = document.getElementById('stop-btn');
     const voice_btn = document.getElementById('voice-btn');
     const video_btn = document.getElementById('video-btn');
+    const select_camera_btn = document.getElementById('select-camera-btn');
+    const select_screen_btn = document.getElementById('select-screen-btn');
 
     // const btn_observer = new MutationObserver((mutations) => {
     //     mutations.forEach((mutation: MutationRecord) => {
@@ -61,16 +63,16 @@ window.onload = async () => {
     enableBtn(video_btn, false);
     enableBtn(stop_btn, false);
 
-    // if (local_video) {
-    //     local_video.style.display = 'none';
-    // }
-
-    // if (start_btn) {
-    //     start_btn.onclick = async () => {
-    //         loadVideoDevices();
-    //         loadMediaScreen();
-    //     };
-    // }
+    if (select_camera_btn) {
+        select_camera_btn.onclick = async () => {
+            loadVideoDevices();
+        };
+    }
+    if (select_screen_btn) {
+        select_screen_btn.onclick = async () => {
+            loadMediaScreen();
+        };
+    }
 
     async function loadVideoDevices() {
         try {
@@ -101,6 +103,7 @@ window.onload = async () => {
                         console.log('video-input', device.deviceId);
                     }
                 });
+                loadVideoDevicesToListContainer(devices);
             }
 
         } catch (err) {
@@ -127,6 +130,27 @@ window.onload = async () => {
     }
 
 
+    function loadVideoDevicesToListContainer(devices: MediaDeviceInfo[]) {
+        const left_list_lay: HTMLElement | undefined = document.getElementById('media-left-list-lay');
+        if (!left_list_lay) return;
+        left_list_lay.innerHTML = '';
+        devices.forEach((device: MediaDeviceInfo) => {
+            const list_item = document.createElement('div');
+            list_item.className = 'media-list-item';
+            list_item.id = device.deviceId;
+            list_item.innerHTML = `
+                    <div class="media-list-item-icon">
+                        <i class="fas fa-video list-icon"></i>
+                    </div>
+                    <div class="media-list-item-text">
+                        <div class="media-list-item-text-title">${device.label}</div>
+                        <!-- <div class="media-list-item-text-subtitle">${device.deviceId}</div> -->
+                        </div>
+                    </div>
+                `;
+            left_list_lay.appendChild(list_item);
+        });
+    }
 
 
 
