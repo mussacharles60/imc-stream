@@ -32,9 +32,19 @@ body {
     text-align: center;
     position: relative;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: center;
     align-items: center;
+}
+
+.live-icon {
+    /* position: absolute; */
+    /* top: 0; */
+    /* left: 0; */
+    /* z-index: 1; */
+    margin: 4px 0 4px 20px;
+    color: #da0a0a;
+    font-size: 24px;
 }
 
 .main-content {
@@ -58,6 +68,7 @@ body {
     padding: 0;
     border: 1px solid #349cf2;
     border-radius: 8px;
+    background-color: rgba(0, 0, 0, 0);
     margin: 0;
     display: flex;
     flex-direction: column;
@@ -91,6 +102,7 @@ media top
     text-align: center;
     margin: 0;
     padding: 0;
+    background-color: rgba(255, 255, 255, 0.2);
     border: 1px solid #349cf2;
     border-radius: 8px;
     margin: 0;
@@ -147,7 +159,8 @@ media top
     overflow: hidden;
 }
 
-.main-content .media-top-lay .media-left-lay {
+
+/* .main-content .media-top-lay .media-left-lay {
     border: 1px solid #349cf2;
     border-top-left-radius: 8px;
     border-bottom-left-radius: 8px;
@@ -157,7 +170,7 @@ media top
     border: 1px solid #349cf2;
     border-top-right-radius: 8px;
     border-bottom-right-radius: 8px;
-}
+} */
 
 .main-content .media-top-lay .media-lay .media-list-btn {
     width: 90%;
@@ -200,14 +213,14 @@ media top
 }
 
 .media-list-lay .media-list-item {
-    width: calc(100% - 4px);
+    width: 90%;
     height: 48px;
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
     position: relative;
-    margin: 0 0 4px 0;
+    margin: 8px;
     padding: 0;
     border: 1px solid #349cf2;
     border-radius: 8px;
@@ -280,8 +293,8 @@ bottom
 }
 
 .btn {
-    width: auto;
-    height: auto;
+    width: 50px;
+    height: 50px;
     max-height: 60px;
     text-align: center;
     padding: 4px 4px;
@@ -289,16 +302,32 @@ bottom
     border: 1px solid rgb(18, 109, 51);
     border-radius: 8px;
     margin: 0 8px 0 8px;
-    text-decoration: none;
-    font-size: 12px;
-    color: white;
     font-size: 1rem;
     cursor: pointer;
     text-transform: none;
     display: none;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn-red {
+    background: rgb(255, 0, 0);
+    border: 1px solid rgb(255, 0, 0);
+}
+
+.btn-icon {
+    color: #fff;
+    font-size: 36px;
+    font-weight: bold;
 }
 
 .btn:hover {
     background: rgb(18, 109, 51);
     border: 1px solid rgb(18, 109, 51);
+}
+
+.btn-red:hover {
+    background: rgb(109, 0, 0);
+    border: 1px solid rgb(255, 0, 0);
 }

@@ -25,18 +25,21 @@ window.onload = async () => {
     // Global State
     const pc = new RTCPeerConnection(servers);
     let localStream: MediaStream | null = null;
-    // let remoteStream: MediaStream | null = null;
 
     var media_devices: MediaDeviceInfo[] = [];
 
     const local_video: HTMLElement | undefined = document.getElementById('local-video');
-    const start_btn: HTMLElement | undefined = document.getElementById('start-btn');
-    const stop_btn = document.getElementById('stop-btn');
-    const voice_btn = document.getElementById('voice-btn');
-    const video_btn = document.getElementById('video-btn');
     const select_camera_btn = document.getElementById('select-camera-btn');
     const select_screen_btn = document.getElementById('select-screen-btn');
+
     const open_setting_btn = document.getElementById('open-setting-btn');
+    const start_stream_btn = document.getElementById('start-stream-btn');
+    const voice_on_btn = document.getElementById('voice-on-btn');
+    const voice_off_btn = document.getElementById('voice-off-btn');
+    const video_on_btn = document.getElementById('video-on-btn');
+    const video_off_btn = document.getElementById('video-off-btn');
+    const stop_stream_btn = document.getElementById('stop-stream-btn');
+
 
     // const btn_observer = new MutationObserver((mutations) => {
     //     mutations.forEach((mutation: MutationRecord) => {
@@ -61,15 +64,14 @@ window.onload = async () => {
             const media_top_lay = document.getElementById('media-top-lay');
             const filter_container = document.getElementById('filter-container');
             if (!media_top_lay || !filter_container) return;
-             // alternate media_top_lay display_style
             if (media_top_lay.style.display === 'none') {
                 media_top_lay.style.display = 'flex';
                 filter_container.style.display = 'flex';
-                open_setting_btn.innerText = 'Close Setting';
+                open_setting_btn.title = 'Close Setting';
             } else {
                 media_top_lay.style.display = 'none';
                 filter_container.style.display = 'none';
-                open_setting_btn.innerText = 'Open Setting';
+                open_setting_btn.title = 'Open Setting';
             }
         });
     }
@@ -77,14 +79,16 @@ window.onload = async () => {
     const enableBtn = (btn: HTMLElement | undefined, enable: boolean) => {
         if (!btn) return;
         (btn as any).disabled = !enable;
-        btn.style.display = enable ? 'block' : 'none';
+        btn.style.display = enable ? 'flex' : 'none';
     };
 
     enableBtn(open_setting_btn, true);
-    enableBtn(start_btn, false);
-    enableBtn(voice_btn, false);
-    enableBtn(video_btn, false);
-    enableBtn(stop_btn, false);
+    enableBtn(start_stream_btn, false);
+    enableBtn(voice_on_btn, false);
+    enableBtn(voice_off_btn, false);
+    enableBtn(video_on_btn, false);
+    enableBtn(video_off_btn, false);
+    enableBtn(stop_stream_btn, false);
 
     if (select_camera_btn) {
         select_camera_btn.onclick = async () => {
@@ -227,11 +231,12 @@ window.onload = async () => {
         (local_video as any).srcObject = stream;
 
         // enable buttons
-        enableBtn(start_btn, true);
-        enableBtn(voice_btn, true);
-        enableBtn(video_btn, true);
-        enableBtn(stop_btn, true);
-
+        enableBtn(start_stream_btn, true);
+        enableBtn(voice_on_btn, false);
+        enableBtn(voice_off_btn, true);
+        enableBtn(video_on_btn, false);
+        enableBtn(video_off_btn, true);
+        enableBtn(stop_stream_btn, true);
     }
 
     async function loadScreenInputsToListContainer(stream: MediaStream) {
@@ -272,10 +277,12 @@ window.onload = async () => {
         (local_video as any).srcObject = stream;
 
         // enable buttons
-        enableBtn(start_btn, true);
-        enableBtn(voice_btn, true);
-        enableBtn(video_btn, true);
-        enableBtn(stop_btn, true);
+        enableBtn(start_stream_btn, true);
+        enableBtn(voice_on_btn, false);
+        enableBtn(voice_off_btn, true);
+        enableBtn(video_on_btn, false);
+        enableBtn(video_off_btn, true);
+        enableBtn(stop_stream_btn, true);
     }
 
 }

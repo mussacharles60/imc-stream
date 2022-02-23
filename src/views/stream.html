@@ -14,7 +14,10 @@
 
 <body>
     <div class="container">
-        <div class="header-text">Live Stream</div>
+        <div class="header-text">
+            <span>Live Stream</span>
+            <i class="fa-solid fa-circle fa-fw fa-beat-fade live-icon" id="live-icon"></i>
+        </div>
         <div class="main-content">
             <video class="local-video" id="local-video" playsinline autoplay muted></video>
             <div id="filter-container"></div>
@@ -36,11 +39,28 @@
                 </div>
             </div>
             <div class="buttons-container">
-                <div class="open-setting-btn btn" id="open-setting-btn">Close Settings</div>
-                <div class="start-btn btn" id="start-btn">Go Live</div>
-                <div class="voice-btn btn" disabled id="voice-btn">Turn Off Voice</div>
-                <div class="video-btn btn" disabled id="video-btn">Turn Off Video</div>
-                <div class="stop-btn btn" disabled id="stop-btn">Stop Stream</div>
+                <div class="open-setting-btn btn" id="open-setting-btn" title="Close Settings">
+                    <i class="fa fa-cog btn-icon" aria-hidden="true"></i>
+                </div>
+                <div class="start-stream-btn btn" id="start-stream-btn" title="Go Live">
+                    <!-- <i class="fa fa-circle-o-notch fa-spin" aria-hidden="true"></i> -->
+                    <i class="fa-solid fa-tower-broadcast btn-icon"></i>
+                </div>
+                <div class="voice-btn btn" disabled id="voice-off-btn" title="Mute Voice">
+                    <i class="fa fa-microphone-slash btn-icon" aria-hidden="true"></i>
+                </div>
+                <div class="voice-btn btn" disabled id="voice-on-btn" title="Unmute Voice">
+                    <i class="fa fa-microphone btn-icon" aria-hidden="true"></i>
+                </div>
+                <div class="video-btn btn" disabled id="video-off-btn" title="Turn Off Video">
+                    <i class="fa fa-video-slash btn-icon" aria-hidden="true"></i>
+                </div>
+                <div class="video-btn btn" disabled id="video-on-btn" title="Turn On Video">
+                    <i class="fa fa-video btn-icon" aria-hidden="true"></i>
+                </div>
+                <div class="stop-btn btn btn-red" disabled id="stop-stream-btn" title="Stop Stream">
+                    <i class="fa fa-stop btn-icon" aria-hidden="true"></i>
+                </div>
             </div>
         </div>
     </div>
