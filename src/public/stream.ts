@@ -61,56 +61,16 @@ window.onload = async () => {
     enableBtn(video_btn, false);
     enableBtn(stop_btn, false);
 
-    if (local_video) {
-        local_video.style.display = 'none';
-    }
+    // if (local_video) {
+    //     local_video.style.display = 'none';
+    // }
 
-    if (start_btn) {
-        start_btn.onclick = async () => {
-            try {
-                if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-                    alert('Your browser does not support media devices.');
-                    return;
-                }
-                // get video or audio devices | camera hardware
-                const devices: MediaDeviceInfo[] = await navigator.mediaDevices.enumerateDevices();
-
-                // // check if there is a camera
-                // const video_device = devices.find((device: MediaDeviceInfo) => device.kind === 'videoinput');
-                // // ceck if there is a microphone
-                // const audio_device = devices.find((device: MediaDeviceInfo) => device.kind === 'audioinput');
-
-                // check if there are any devices
-                if (devices.length === 0) {
-
-
-                } else {
-                    // // iterate on all devices and if is a video device, get the deviceId
-                    // const video_device_id = devices.find((device: MediaDeviceInfo) => device.kind === 'videoinput').deviceId;
-                    // iterate on all devices and log the deviceId
-                    devices.forEach((device: MediaDeviceInfo) => {
-                        // check if device is a video device
-                        if (device.kind === 'videoinput') {
-                            console.log(device.deviceId);
-                        }
-                    });
-                }
-
-                // get display media | desktop sharing
-                const stream = await navigator.mediaDevices.getDisplayMedia({
-                    video: true,
-                    audio: true,
-                }).catch((err) => {
-                    console.log('media-display-error:', err);
-                });
-                if (!stream) return;
-
-                console.log('media-display:', stream);
-            } catch (err) {
-                console.log('get-media-error:', err);
-            }
-        };
-    }
+    // if (start_btn) {
+    //     start_btn.onclick = async () => {
+    //         loadVideoDevices();
+    //         loadMediaScreen();
+    //     };
+    // }
 
     async function loadVideoDevices() {
         try {
