@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WebCam</title>
+</head>
+
+<body>
+    <div>
+        <div id="container">
+            <div className="select">
+                <label>Select Video Input</label>
+                <button id="toggleCam">Toggle Camera</button>
+            </div>
+        </div>
+
+        <video autoplay muted playsinline></video>
+    </div>
+
+    <script>
+        function main() {
+            const videoElement = document.querySelector("video");
+            const toggleButton = document.querySelector("#toggleCam");
+
+            /**
+             * @type {Array<MediaDeviceInfo>}
+             */
+            let videoDevices;
+            let currIndex = -1;
+
+            init();
+
+            function init() {
+                if (navigator.mediaDevices && navigator.mediaDevices.enumerateDevices) {
+                    navigator.mediaDevices
+                        .getUserMedia({
+                            video: {}
+                        })
+                        .then(() => navigator.mediaDevices.enumerateDevices())
+                        .then(deviceInfos => {
+                            videoDevices = Array.from(deviceInfos).filter(item => item.kind == "videoinput");
+
+                            if (videoDevices.length == 0) {
+                                noCameraFound();
+                            } else if (videoDevices.length == 1) {
+                                const label = videoDevices[0].label || "Default Camera";
+                                toggleButton.textContent = `Using ${label}`;
+                                toggleButton.setAttribute("disabled", "1");
+                                useCamera(videoDevices[0]);
+                            } else {
+                                toggleCamera();
+                                toggleButton.addEventListener("click", toggleCamera);
+                            }
+                        });
+                } else {
+                    noCameraFound();
+                }
+            }
+
+            function noCameraFound() {
+                toggleButton.textContent = "No Camera";
+                toggleButton.setAttribute("disabled", "1");
+            }
+
+            /**
+             * @param {MediaDeviceInfo} device
+             */
+            function useCamera(device) {
+                if (videoElement && videoElement.srcObject && videoElement.srcObject.getTracks) {
+                    videoElement.srcObject.getTracks().forEach(track => track.stop());
+                }
+
+                const deviceId = device.deviceId;
+                const constraints = {
+                    video: {
+                        deviceId: deviceId ? {
+                            exact: deviceId
+                        } : undefined
+                    }
+                };
+
+                navigator.mediaDevices
+                    .getUserMedia(constraints)
+                    .then(stream => {
+                        videoElement.srcObject = stream;
+                    })
+                    .catch(handleError);
+            }
+
+            function toggleCamera() {
+                currIndex = (currIndex + 1) % videoDevices.length;
+                useCamera(videoDevices[currIndex]);
+
+                const nextIndex = (currIndex + 1) % videoDevices.length;
+                const label = videoDevices[nextIndex].label || `Camera ${nextIndex}`;
+                toggleButton.textContent = `Use ${label}`;
+            }
+
+            function handleError(error) {
+                console.log("Error: ", error);
+            }
+        }
+
+        main();
+    </script>
+</body>
+
+</html>
+
+<!--<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>IMC Stream</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/stream.css" type="text/css" />
+</head>
+
+<body>
+    <div class="container">
+        <div class="header-text">
+            <span>Live Stream</span>
+            <i class="fa-solid fa-circle fa-fw fa-beat-fade live-icon" id="live-icon"></i>
+        </div>
+        <div class="main-content">
+            <video class="local-video" id="local-video" playsinline autoplay></video>
+            <div id="filter-container"></div>
+            <div class="media-top-lay" id="media-top-lay">
+                <div class="media-select-title">Select Input</div>
+                <div class="media-list-container">
+                    <div class="media-left-lay media-lay">
+                        <div class="media-list-btn" id="select-camera-btn">Available Video & Audio Devices</div>
+                        <div class="media-left-list-lay media-list-lay" id="media-left-list-lay">
+                            <span class="media-list-error-text" id="media-left-error-text"></span>
+                        </div>
+                    </div>
+                    <div class="media-right-lay media-lay">
+                        <div class="media-list-btn" id="select-screen-btn">Select Desktop Or Media Screen(s)</div>
+                        <div class="media-right-list media-list-lay" id="media-right-list-lay">
+                            <span class="media-list-error-text" id="media-right-error-text"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="buttons-container">
+                <div class="open-setting-btn btn" id="open-setting-btn" title="Close Settings">
+                    <i class="fa fa-cog btn-icon" aria-hidden="true"></i>
+                </div>
+                <div class="start-stream-btn btn" id="start-stream-btn" title="Go Live">
+                    <i class="fa-solid fa-tower-broadcast btn-icon"></i>
+                </div>
+                <div class="voice-btn btn" disabled id="voice-off-btn" title="Mute Voice">
+                    <i class="fa fa-microphone-slash btn-icon" aria-hidden="true"></i>
+                </div>
+                <div class="voice-btn btn" disabled id="voice-on-btn" title="Unmute Voice">
+                    <i class="fa fa-microphone btn-icon" aria-hidden="true"></i>
+                </div>
+                <div class="video-btn btn" disabled id="video-off-btn" title="Turn Off Video">
+                    <i class="fa fa-video-slash btn-icon" aria-hidden="true"></i>
+                </div>
+                <div class="video-btn btn" disabled id="video-on-btn" title="Turn On Video">
+                    <i class="fa fa-video btn-icon" aria-hidden="true"></i>
+                </div>
+                <div class="stop-btn btn btn-red" disabled id="stop-stream-btn" title="Stop Stream">
+                    <i class="fa fa-stop btn-icon" aria-hidden="true"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="/socket.io.js"></script>
+    <script type="text/javascript" src="/stream.js"></script>
+</body>
+
+</html> -->

@@ -1,11 +1,11 @@
 
 // reference: https://developer.okta.com/blog/2018/11/15/node-express-typescript
 
-import express from 'express';
-import cookieParser from 'cookie-parser';
-import { createServer } from 'http';
 import { Server } from 'socket.io';
+import cookieParser from 'cookie-parser';
 import cors from 'cors';
+import { createServer } from 'http';
+import express from 'express';
 import path from "path";
 
 const app = express();
@@ -74,6 +74,10 @@ app.get("/", (_req, res) => {
 
 app.get("/stream", (_req, res) => {
   res.sendFile(__dirname + "/views/stream.html");
+});
+
+app.get("/sample", (_req, res) => {
+  res.sendFile(__dirname + "/views/sample.html");
 });
 
 app.get("/watch", (_req, res) => {
